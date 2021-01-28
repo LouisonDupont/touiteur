@@ -10,7 +10,14 @@
 </head>
 <body>
 
-    <header>
-        <h1>test</h1></header>
-      
-    <script src="assets/js/bundle.min.js"></script>
+<header>
+        <div class="container">
+            <div class="header_content">
+                <div class="logo">
+                    <img src="src/img/duck.svg" alt="logo Duck">
+                    <h1>Touiteur</h1>
+                </div>
+                <p>Il s'agit d'un monde peuplé de canard de merde.</p>
+            </div>
+        </div>
+</header>

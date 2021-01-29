@@ -15,10 +15,12 @@
             }
         }
         .global_right_content{
+            width: 80%;
             display: grid;
-
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            
             .touit_content{
-
+                padding: 3rem 1rem;
                 .touit{
                     display: flex;
                     flex-direction: column;

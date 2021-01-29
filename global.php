@@ -45,6 +45,86 @@
                         <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
                     </div>
                 </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
+                <article class="touit">
+                    <p class="touit_pseudo">@louisondu37</p>
+                    <p class="touit_message">Coucou Hibou hihi</p>
+                    <div class="touit_icone_box">
+                        <button class="like"><img src="src/img/like.svg" alt="icone du like"></button>
+                        <button class="comment"><img src="src/img/comment.svg" alt="icone du commentaire"></button>
+                    </div>
+                </article>
             </div>
         </div>
     </div>

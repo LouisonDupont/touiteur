@@ -26,5 +26,13 @@
   "dependencies": {
     "jquery": "^3.5.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisonDupont/touiteur.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LouisonDupont/touiteur/issues"
+  },
+  "homepage": "https://github.com/LouisonDupont/touiteur#readme",
   "description": ""
 }

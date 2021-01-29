@@ -145,3 +145,8 @@ a[href^="tel"] {
     content: '('attr(href)')';
   }
 }
+
+.container{
+  max-width: 120rem;
+  margin: 0 auto;
+}

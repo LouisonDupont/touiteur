@@ -1,0 +1,31 @@
+header{
+    padding: 4rem 2rem;
+    .container{
+        .header_content{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            
+            .logo{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                img{
+                    max-width: 10rem;
+                }
+
+                h1{
+                    font-family: 'Karla', sans-serif;
+                    font-size: 5rem;
+                    font-weight: 600;
+                    margin-left: 2rem;
+                }
+            }
+            p{
+                font-family: 'Source Serif Pro', serif;
+                font-size: 2rem;
+                font-weight: 300;
+            }
+        }
+    }
+}

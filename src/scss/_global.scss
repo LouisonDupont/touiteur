@@ -1,0 +1,61 @@
+.main_section{
+    .container{
+        display: flex;
+        .global_left_content{
+            width: 20%;
+
+            .like_content{
+
+            }
+            .author_content{
+                
+            }
+            .words_content{
+                
+            }
+        }
+        .global_right_content{
+            display: grid;
+
+            .touit_content{
+
+                .touit{
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+                    border-radius: 15px;box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.12);
+
+                    p{
+                        font-family: 'Karla', sans-serif;
+                        font-size: 2rem;
+                    }
+
+                    .touit_pseudo{
+                        font-weight: 600;
+                    }
+
+                    .touit_message{
+                        font-weight: 300;
+                    }
+
+                    .touit_icone_box{
+                        margin-top: 1rem;
+                        display: flex;
+                        align-items: center;
+                        .like{
+                            width: 4rem;
+                            background-color: white;
+                            border: none;
+                        }
+    
+                        .comment{
+                            width: 4rem;
+                            background-color: white;
+                            border: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

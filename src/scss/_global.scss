@@ -3,24 +3,77 @@
         display: flex;
         .global_left_content{
             width: 20%;
-
+            padding: 3rem 1rem;
             .like_content{
+                font-family: 'Karla', sans-serif;
+            
+                .like_card{
+                    margin-bottom: 2rem;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 1rem;
+                    font-weight: 600;
 
+                    .like_pseudo{
+                        font-weight: 300;
+                        font-size: 1.3rem;
+                    }
+                    .like_message{
+
+                    }
+                    .like_number{
+                        display: flex;
+                        img{
+                            margin-right: .5rem;
+                            width: 10px;
+                        } 
+                    }
+                }
             }
             .author_content{
-                
+                margin-top: 1rem;
+                font-family: 'Karla', sans-serif;
+
+                .author_box{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                    gap: 5px 10px;
+                    .author_card{
+
+                        margin-bottom: 1rem;
+                        .author_pseudo{
+                            font-weight: 300;
+                            font-size: 1.3rem;
+                        }
+                    }
+                }
             }
             .words_content{
-                
+                margin-top: 3rem;
+                font-family: 'Karla', sans-serif;
+                .words_box{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                    gap: 5px 10px;
+                }
+
+                .words_card{
+                    .words_display{
+                        font-weight: 300;
+                        font-size: 1.3rem;
+                    }
+                }
             }
         }
         .global_right_content{
+            font-family: 'Karla', sans-serif;
             width: 80%;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            
+            padding: 3rem 1rem;
             .touit_content{
-                padding: 3rem 1rem;
+                
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
                 .touit{
                     display: flex;
                     flex-direction: column;
@@ -29,29 +82,31 @@
 
                     p{
                         font-family: 'Karla', sans-serif;
-                        font-size: 2rem;
                     }
 
                     .touit_pseudo{
                         font-weight: 600;
+                        font-size: 2rem;
                     }
 
                     .touit_message{
                         font-weight: 300;
+                        font-size: 1.8rem;
                     }
 
                     .touit_icone_box{
                         margin-top: 1rem;
                         display: flex;
                         align-items: center;
+                        justify-content: flex-end;
                         .like{
-                            width: 4rem;
+                            width: 3.7rem;
                             background-color: white;
                             border: none;
                         }
     
                         .comment{
-                            width: 4rem;
+                            width: 3.7rem;
                             background-color: white;
                             border: none;
                         }

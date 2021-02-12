@@ -10,7 +10,7 @@
                 <textarea id="msg" name="message" placeholder="..."></textarea>
             </div>
             <div class="champ btn">
-                <input type="submit" value="Envoyer">
+                <input type="submit" value="Envoyer" id="buttonInput">
             </div>
         </form>
     </div>

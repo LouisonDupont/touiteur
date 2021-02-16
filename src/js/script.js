@@ -4,6 +4,8 @@ const checkButton = document.querySelector("#buttonInput");
 const messageContainer = document.querySelector(".touit_content");
 const formulaireInput = document.querySelector("#form");
 
+let currentTimeStamp = 0;
+
 formulaireInput.addEventListener("submit", function(ev){
     ev.preventDefault();
 
@@ -13,21 +15,9 @@ formulaireInput.addEventListener("submit", function(ev){
         nameInput.value,
         msgInput.value
     );
-
-    getTouit(function(resp) {
-        for (let i=0; i < resp.messages.length; i++){
-            addTouit(resp.messages[i].name, resp.messages[i].message);
-        }
-    }, function() {
-    });
 });
 
-getTouit(function(resp) {
-    for (let i=0; i < resp.messages.length; i++){
-        addTouit(resp.messages[i].name, resp.messages[i].message);
-    }
-}, function() {
-});
+
 
 function addTouit(pseudo, message) {
     if (pseudo,message) {
@@ -106,6 +96,14 @@ function getTouit(success, error) {
     request.send();
 }
 
+// Timestamp
+
+function formatTimesTamp (timestamp, converToMilli){
+    if (converToMilli){
+        return new Date(timestamp*1000).toLocaleString('fr-FR');
+    }
+}
+
 // SEND
 
 function sendTouit(success, error, pseudo, message) {
@@ -130,6 +128,16 @@ function sendTouit(success, error, pseudo, message) {
     const coucou = "name="+pseudo+"&message="+message;
     requestSend.send(coucou);
 }
+
+setInterval(function(){
+    getTouit(function(resp) {
+        for (let i=0; i < resp.messages.length; i++){
+            addTouit(resp.messages[i].name, resp.messages[i].message);
+        }
+    }, function() {
+        console.log("Error : Not working!");
+    });
+}, 1000);
 
 // TEST AVEC JOKE
 

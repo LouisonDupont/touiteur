@@ -1,6 +1,6 @@
 <section class="touiteur_send">
     <div class="container">
-        <form method="post" action="form.php">
+        <form id="form">
             <div class="champ">
                 <label for="pseudo">Pseudo : </label>
                 <input type="text" id="pseudo" placeholder="...">

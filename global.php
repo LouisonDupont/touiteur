@@ -75,7 +75,11 @@
         <div class="global_right_content">
         <h2>Last touits</h2>
             <div class="touit_content">
-            
+            </div>
+            <div class="displayTouit">
+            <p class="testTouit"></p>
+            </div>
+            <div class="displayJoke">
             </div>
         </div>
     </div>

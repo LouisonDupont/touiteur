@@ -19,7 +19,7 @@ formulaireInput.addEventListener("submit", function(ev){
 
 
 
-function addTouit(pseudo, message) {
+function addTouit(pseudo, message, likes, comments, timestamp, id) {
     if (pseudo,message) {
 
         // Insertion du Touit
@@ -27,6 +27,7 @@ function addTouit(pseudo, message) {
 
         let myTouit = document.createElement("article");
         myTouit.className = "touit";
+        myTouit.id = id;
         let newPseudo = document.createElement("p");
         newPseudo.className = "touit_pseudo";
         let newPseudoContent =  document.createTextNode(pseudo);
@@ -42,12 +43,18 @@ function addTouit(pseudo, message) {
 
         let newIconeBox = document.createElement("div");
         newIconeBox.className = "touit_icone_box";
+        let newLikeNumber = document.createElement("p");
+        newLikeNumber.className = "likeNb";
+        newLikeNumber = likes;
         let newLikeButton = document.createElement("button");
         newLikeButton.className = "like";
         let newLikeButtonImg = document.createElement("img");
         newLikeButtonImg.src = "src/img/like.svg";
         let newCommentButton = document.createElement("button");
         newCommentButton.className = "comment";
+        let newCommentContent = document.createElement("p");
+        newCommentContent.className = "commentContent";
+        newCommentContent = comments;
         let newCommentButtonImg = document.createElement("img");
         newCommentButtonImg.src = "src/img/comment.svg";
         let newCloseButton = document.createElement("button");
@@ -72,14 +79,24 @@ function addTouit(pseudo, message) {
         newCloseButton.addEventListener("click", function(){
             messageContainer.removeChild(myTouit);
         })
+
+        // Like
+
+        newLikeButton.addEventListener("click", function(){
+            addLike(
+                function(){console.log("et oui")},
+                function(){console.log("et non")},
+                myTouit.id
+            )
+        })
     }
 }
 
 // RECUPERER TOUIT
 
-function getTouit(success, error) {
+function getTouit(lastTimestamp, success, error) {
     const request = new XMLHttpRequest();
-    request.open("GET", "http://touiteur.cefim-formation.org/list", true);
+    request.open("GET", "http://touiteur.cefim-formation.org/list?ts=" + lastTimestamp, true);
     request.addEventListener("readystatechange", function () {
         if (request.readyState === XMLHttpRequest.DONE) {
             // On a reçu toute la réponse
@@ -98,11 +115,15 @@ function getTouit(success, error) {
 
 // Timestamp
 
-function formatTimesTamp (timestamp, converToMilli){
-    if (converToMilli){
-        return new Date(timestamp*1000).toLocaleString('fr-FR');
-    }
+function formatTimestamp(timestamp){
+    return new Date(timestamp*1000).toLocaleString('fr-FR');
 }
+
+// function formatTimestamp(timestamp) {
+//     const formattedDate = new Date(timestamp).toLocaleDateString('fr-FR');
+//     const formattedTime = new Date(timestamp).toLocaleTimeString('fr-FR');
+// return formattedDate + ' ,' + formattedTime;
+// }
 
 // SEND
 
@@ -125,19 +146,48 @@ function sendTouit(success, error, pseudo, message) {
             }
         }
     });
-    const coucou = "name="+pseudo+"&message="+message;
-    requestSend.send(coucou);
+    const finalSendTouit = "name="+pseudo+"&message="+message;
+    requestSend.send(finalSendTouit);
 }
 
+// SET INTERVAL 
+
+let timestamp = 0;
+
 setInterval(function(){
-    getTouit(function(resp) {
-        for (let i=0; i < resp.messages.length; i++){
-            addTouit(resp.messages[i].name, resp.messages[i].message);
+    getTouit(
+        timestamp,
+        function (resp){
+            for (let i=0; i < resp.messages.length; i++){
+                addTouit(resp.messages[i].name, resp.messages[i].message, resp.messages[i].likes, resp.messages[i].comments_count, resp.messages[i].ts, resp.messages[i].id);
+                timestamp = resp.ts;
+            }
+        },
+        function(){console.log("Error : Not working!");},
+)}, 1000);
+
+
+// LIKE 
+
+function addLike(success, error, id) {
+    const requestLike = new XMLHttpRequest();
+    requestLike.open("PUT", "http://touiteur.cefim-formation.org/likes/send", true);
+    requestLike.addEventListener("readystatechange", function () {
+        if (requestLike.readyState === XMLHttpRequest.DONE) {
+            // On a reçu toute la réponse
+            if (requestLike.status === 200) {
+                // La requête a fonctionnée
+                const reponseLike = JSON.parse(requestLike.responseText);
+                console.log(reponseLike);
+                success(reponseLike); // Correspond à resp *
+            } else {
+                error(status);
+            }
         }
-    }, function() {
-        console.log("Error : Not working!");
     });
-}, 1000);
+    const finaladdLike = "message_id="+id;
+    requestLike.send(finaladdLike);
+}
 
 // TEST AVEC JOKE
 

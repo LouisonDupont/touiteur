@@ -45,25 +45,31 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
         newIconeBox.className = "touit_icone_box";
         let newLikeNumber = document.createElement("p");
         newLikeNumber.className = "likeNb";
-        newLikeNumber = likes;
+        newLikeNumber.textContent = likes;
         let newLikeButton = document.createElement("button");
         newLikeButton.className = "like";
         let newLikeButtonImg = document.createElement("img");
         newLikeButtonImg.src = "src/img/like.svg";
         let newCommentButton = document.createElement("button");
         newCommentButton.className = "comment";
-        let newCommentContent = document.createElement("p");
-        newCommentContent.className = "commentContent";
-        newCommentContent = comments;
+        // let newCommentContent = document.createElement("p");
+        // newCommentContent.className = "commentContent";
+        // newCommentContent.textContent  = comments;
         let newCommentButtonImg = document.createElement("img");
         newCommentButtonImg.src = "src/img/comment.svg";
         let newCloseButton = document.createElement("button");
         newCloseButton.className = "close";
         let newCloseButtonImg = document.createElement("img");
         newCloseButtonImg.src = "src/img/close.svg";
+        let newDate = document.createElement("p");
+        newDate.className = "dateContent";
+        newDate.textContent  = formatTimestamp(timestamp);
         newIconeBox.appendChild(newLikeButton);
+        newIconeBox.appendChild(newLikeNumber);
         newLikeButton.appendChild(newLikeButtonImg);
         newIconeBox.appendChild(newCommentButton);
+        //newIconeBox.appendChild(newCommentContent);
+        newIconeBox.appendChild(newDate);
         newCommentButton.appendChild(newCommentButtonImg);
         newIconeBox.appendChild(newCloseButton);
         newCloseButton.appendChild(newCloseButtonImg);
@@ -115,15 +121,15 @@ function getTouit(lastTimestamp, success, error) {
 
 // Timestamp
 
-function formatTimestamp(timestamp){
-    return new Date(timestamp*1000).toLocaleString('fr-FR');
-}
-
-// function formatTimestamp(timestamp) {
-//     const formattedDate = new Date(timestamp).toLocaleDateString('fr-FR');
-//     const formattedTime = new Date(timestamp).toLocaleTimeString('fr-FR');
-// return formattedDate + ' ,' + formattedTime;
+// function formatTimestamp(timestamp){
+//     return new Date(timestamp*1000).toLocaleString('fr-FR');
 // }
+
+function formatTimestamp(timestamp) {
+    const formattedDate = new Date(timestamp*1000).toLocaleDateString('fr-FR');
+    //const formattedTime = new Date(timestamp).toLocaleTimeString('fr-FR');
+return formattedDate;
+}
 
 // SEND
 
@@ -172,21 +178,22 @@ setInterval(function(){
 function addLike(success, error, id) {
     const requestLike = new XMLHttpRequest();
     requestLike.open("PUT", "http://touiteur.cefim-formation.org/likes/send", true);
+    requestLike.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     requestLike.addEventListener("readystatechange", function () {
         if (requestLike.readyState === XMLHttpRequest.DONE) {
             // On a reçu toute la réponse
             if (requestLike.status === 200) {
                 // La requête a fonctionnée
                 const reponseLike = JSON.parse(requestLike.responseText);
-                console.log(reponseLike);
                 success(reponseLike); // Correspond à resp *
             } else {
                 error(status);
             }
+
         }
     });
-    const finaladdLike = "message_id="+id;
-    requestLike.send(finaladdLike);
+    const data = "message_id="+id;
+    requestLike.send(data);
 }
 
 // TEST AVEC JOKE

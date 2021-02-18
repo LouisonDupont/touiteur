@@ -7,7 +7,7 @@ const formulaireInput = document.querySelector("#form");
 let currentTimeStamp = 0;
 
 formulaireInput.addEventListener("submit", function(ev){
-    ev.preventDefault();
+    ev.preventDefault();// Sert a remettre à zero l'évenement naturel d'un submit (refresh)
 
     sendTouit(
         function() {console.log("coucou");},
@@ -27,7 +27,7 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
 
         let myTouit = document.createElement("article");
         myTouit.className = "touit";
-        myTouit.id = id;
+        myTouit.id = id; // ici j'attribue le parametre id 
         let newPseudo = document.createElement("p");
         newPseudo.className = "touit_pseudo";
         let newPseudoContent =  document.createTextNode(pseudo);
@@ -80,21 +80,65 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
 
         messageContainer.prepend(myTouit);
 
-        // Delete 
+        // // Delete 
 
-        newCloseButton.addEventListener("click", function(){
-            messageContainer.removeChild(myTouit);
-        })
+        // newCloseButton.addEventListener("click", function(){
+        //     messageContainer.removeChild(myTouit);
+        // })
 
         // Like
 
+        // newLikeButton.addEventListener("click", function(){
+        //     addLike(
+        //         function(resp){oneTouit(){
+        //         }},
+        //         function(){console.log("et non")},
+        //         myTouit.id
+        //     )
+        // })
+
         newLikeButton.addEventListener("click", function(){
-            addLike(
-                function(){console.log("et oui")},
-                function(){console.log("et non")},
-                myTouit.id
-            )
-        })
+            newLikeButton.classList.toggle("active");
+            if(newLikeButton.classList.contains("active")){
+                addLike(
+                    function(){
+                        oneTouit(
+                            function(resp) {
+                                newLikeNumber.textContent = resp.data.likes;
+                            },
+                            function() {console.log("Erreur REFRESH ADD");},
+                            myTouit.id);
+                        },
+                    function() {console.log("Erreur ADD");},
+                    myTouit.id
+                );
+                newLikeButton.style.background = "red";
+            }
+            else{
+                deleteLike(
+                    function() {
+                        oneTouit(
+                            function(resp) {
+                                newLikeNumber.textContent = resp.data.likes;
+                            },
+                            function() {console.log("Erreur REFRESH DELETE");},
+                            myTouit.id);
+                    },
+                    function() {console.log("Erreur DELETE");},
+                    myTouit.id
+                );
+                newLikeButton.style.background ="none";
+            }
+        });
+        // myTouit.addEventListener("mouseenter", function(){
+        //     oneTouit(
+        //         function(resp) {
+        //             newLikeNumber.textContent = resp.data.likes;
+        //         },
+        //         function() {console.log("Erreur");},
+        //         myTouit.id);
+        // });
+
     }
 }
 
@@ -119,11 +163,23 @@ function getTouit(lastTimestamp, success, error) {
     request.send();
 }
 
-// Timestamp
+// Recupération d'un seul touit
 
-// function formatTimestamp(timestamp){
-//     return new Date(timestamp*1000).toLocaleString('fr-FR');
-// }
+function oneTouit(success, error, id) {
+    const requestOne = new XMLHttpRequest();
+    requestOne.open("GET", "http://touiteur.cefim-formation.org/get?id=" + id, true);
+    requestOne.addEventListener("readystatechange", function () {
+        if (requestOne.readyState === XMLHttpRequest.DONE) {
+            if (requestOne.status === 200) {
+                const reponseOne = JSON.parse(requestOne.responseText);
+                success(reponseOne);
+            } else{
+                error(status);
+            }
+        }
+    });
+    requestOne.send();
+}
 
 function formatTimestamp(timestamp) {
     const formattedDate = new Date(timestamp*1000).toLocaleDateString('fr-FR');
@@ -169,7 +225,7 @@ setInterval(function(){
                 timestamp = resp.ts;
             }
         },
-        function(){console.log("Error : Not working!");},
+        function(){console.log("Coucou1");},
 )}, 1000);
 
 
@@ -195,6 +251,31 @@ function addLike(success, error, id) {
     const data = "message_id="+id;
     requestLike.send(data);
 }
+
+function deleteLike(success, error, id) {
+    const requestDelete = new XMLHttpRequest();
+    requestDelete.open("DELETE", "http://touiteur.cefim-formation.org/likes/remove", true);
+    requestDelete.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    requestDelete.addEventListener("readystatechange", function () {
+        if (requestDelete.readyState === XMLHttpRequest.DONE) {
+            // On a reçu toute la réponse
+            if (requestDelete.status === 200) {
+                // La requête a fonctionnée
+                const reponseDelete = JSON.parse(requestDelete.responseText);
+                success(reponseDelete);
+            } else {
+                error(status);
+            }
+
+        }
+    });
+    const data = "message_id="+id;
+    requestDelete.send(data);
+}
+
+// MOST LIKE
+dqd
+
 
 // TEST AVEC JOKE
 

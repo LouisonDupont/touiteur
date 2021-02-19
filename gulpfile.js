@@ -9,6 +9,7 @@ const {
 // Load plugins
 
 const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
 const rename = require('gulp-rename');
 const gulpsass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
@@ -35,6 +36,9 @@ function js() {
 
     return src(source)
         .pipe(changed(source))
+        .pipe(babel({                  // <-- rajouter cette pipe
+            presets: ['@babel/env']    
+        }))
         .pipe(concat('bundle.js'))
         .pipe(uglify())
         .pipe(rename({

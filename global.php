@@ -31,27 +31,6 @@
             <div class="words_content">
                 <h2>Words champion</h2>
                     <div class="words_box">
-                        <article class="words_card">
-                            <p class="words_display">Super</p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display">Génial</p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display">Méga</p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display">Youpi</p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display">Ah oui</p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display"></p>
-                        </article>
-                        <article class="words_card">
-                            <p class="words_display">Super</p>
-                        </article>
                     </div>
                 
             </div>

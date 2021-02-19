@@ -1,3 +1,5 @@
+const API_URL = "http://touiteur.cefim-formation.org";
+
 const nameInput = document.querySelector("#pseudo");
 const msgInput = document.querySelector("#msg");
 const checkButton = document.querySelector("#buttonInput");
@@ -369,85 +371,118 @@ addMostLiked(
 
 // Best words
 
-// TOUIT LES PLUS LIKER
+const wordsContainer = document.querySelector(".words_box");
+const trending = document.querySelector("#trending");
 
-const wordsContainer = document.querySelector("words_box");
+function apiGetTrending(success, error) {
+    const request = new XMLHttpRequest();
+    request.open("GET", API_URL + "/trending", true);
+    request.addEventListener("readystatechange", () => {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                const response = JSON.parse(request.responseText);
+                success(response);
+            } else {
+                error(request);
+            }
+        }
+    });
+    request.send();
+}
 
-function bestWords(message,id) {
-    if (message) {
+function setTrending(words) {
+    wordsContainer.innerHTML = "";
+    for (let word of words) {
 
         let myWords = document.createElement("article");
         myWords.className = "words_card";
-        myWords.id = id;
-
         let wordsDisplay = document.createElement("p");
         wordsDisplay.className = "words_display";
-        let wordsDisplayContent =  document.createTextNode(message);
+        wordsDisplay.textContent = word;
 
         myWords.appendChild(wordsDisplay);
-        wordsDisplay.appendChild(wordsDisplayContent);
-
-        // Insertion Finale
 
         wordsContainer.prepend(myWords);
+        
     }
 }
 
-function addBestWords(success, error) {
-    const requestBestWords = new XMLHttpRequest();
-    requestBestWords.open("GET", "http://touiteur.cefim-formation.org/trending", true);
-    requestBestWords.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    requestBestWords.addEventListener("readystatechange", function () {
-        if (requestBestWords.readyState === XMLHttpRequest.DONE) {
-            // On a reçu toute la réponse
-            if (requestBestWords.status === 200) {
-                // La requête a fonctionnée
-                const reponseBestWords = JSON.parse(requestBestWords.responseText);
-                success(reponseBestWords);
-            } else {
-                error(status);
-            }
+setInterval(() => {
+    apiGetTrending(
+        resp => {
+            const trendingWords = Object.entries(resp).sort((a, b) => b[1] - a[1]);
+            setTrending(trendingWords.map(w => w[0]).slice(0, 10));
+        },
+        req => {
+            alert(
+                "Une erreur s'est produite lors de la réception du trending :\n" +
+                "" + req.status + " : " + req.statusText + " !\n" +
+                "Veuillez contacter l'administrateur du site si cela se reproduit !"
+            );
+        }
+    )
+}, 5000);
 
+// Best Author
+
+const authorContainer = document.querySelector(".author_box");
+
+function apiGetAuthor(success, error, user) {
+    const request = new XMLHttpRequest();
+    request.open("GET", API_URL + "/influencers" + user, true);
+    request.addEventListener("readystatechange", () => {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                const response = JSON.parse(request.responseText);
+                success(response);
+            } else {
+                error(request);
+            }
         }
     });
-    requestBestWords.send();
+    request.send();
 }
 
+function setAuthor(authors) {
+    authorContainer.innerHTML = "";
+    for (let author of authors) {
 
+        let myAuthor = document.createElement("article");
+        myAuthor.className = "author_card";
+        let myAuthorDisplay = document.createElement("p");
+        myAuthorDisplay.className = "author_pseudo";
+        myAuthorDisplay.textContent = author;
 
+        myAuthor.appendChild(myAuthorDisplay);
 
-addBestWords(
-    function (resp){
-        for (let i=0; i < resp.messages.length; i++){
-            bestWords(resp.messages[i].message, resp.messages[i].id);
-        }
-    },
-    function(){console.log("Coucou1");
-    },
+        authorContainer.prepend(myAuthor);
+        
+    }
+}
 
-3);
+setInterval(() => {
+    apiGetAuthor(
+        function (resp){
+            const coucouEtCoucou = resp.top.sort(function(a,b){return b.likes - a.likes});
+            for (let i=0; i < coucouEtCoucou.length; i++){
+                mostLiked(coucouEtCoucou[i].name, coucouEtCoucou[i].message, coucouEtCoucou[i].likes, coucouEtCoucou[i].id);
+            }
+        },
+        function(){console.log("Coucou6");
+        },
+    3);
+}, 5000);
 
-
-// setInterval(function(){
-//     addBestWords(
-//         function (resp){
-//             (function(a,b){return b.likes - a.likes})
-//             const trendingWords = Object.entries(resp).sort(function(a, b){return b[1] - a[1];});
-//             console.log(trendingWords);
-//             bestWords(trendingWords
-//                 .map(function(w) { return w[0]; })
-//                 .slice(0, 72)
-//             );
-//         },
-//         function(req){
-//             alert(
-//                 "Une erreur s'est produite lors de la réception du trending :\n" +
-//                 "" + req.status + " : " + req.statusText + " !\n" +
-//                 "Veuillez contacter l'administrateur du site si cela se reproduit !"
-//             );
+// addMostLiked(
+//     function (resp){
+//         const coucouEtCoucou = resp.top.sort(function(a,b){return b.likes - a.likes});
+//         for (let i=0; i < coucouEtCoucou.length; i++){
+//             mostLiked(coucouEtCoucou[i].name, coucouEtCoucou[i].message, coucouEtCoucou[i].likes, coucouEtCoucou[i].id);
 //         }
-//     )
-// }, 5000);
+//     },
+//     function(){console.log("Coucou6");
+//     },
+// 3);
 
 
 

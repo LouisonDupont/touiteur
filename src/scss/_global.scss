@@ -2,6 +2,7 @@
     .container{
         display: flex;
         .global_left_content{
+            font-family: 'Karla', sans-serif;
             width: 20%;
             padding: 3rem 1rem;
             .like_content{
@@ -77,6 +78,7 @@
                 
 
                 .touit{
+                    position: relative;
                     width: 20rem;
                     display: flex;
                     flex-direction: column;
@@ -99,9 +101,19 @@
                     .touit_message{
                         font-weight: 300;
                         font-size: 1.8rem;
+                        max-height: 15rem;
+                        overflow-y: auto;
+                        overflow-x: hidden;
+                        scrollbar-color: transparent;
+                        scrollbar-width: thin;
+                        margin-bottom: 6rem;
+                        margin-top: .5rem;
                     }
 
                     .touit_icone_box{
+                        position: absolute;
+                        bottom: 3.5rem;
+                        right: 0;
                         margin-top: 1rem;
                         display: flex;
                         align-items: center;
@@ -121,6 +133,33 @@
                             width: 3.7rem;
                             background-color: white;
                             border: none;
+                        }
+                    }
+
+                    .modalBox{
+                        width: 10rem;
+                        height: 20rem;
+                        display: flex;
+                        justify-content: center;
+                        position: absolute;
+                        background-color: red;
+                        z-index: 9999;
+                        .commentContent{
+
+                        }
+                    }
+
+                    .touit_date_box{
+                        position: absolute;
+                        bottom: .5rem;
+                        right: 1rem;
+                        display: flex;
+                        justify-content: flex-end;
+                        .dateContent{
+                            margin-top: 2rem;
+                            font-weight: 300;
+                            font-style: italic;
+                            font-size: 1.5rem;
                         }
                     }
                 }

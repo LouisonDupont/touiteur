@@ -1,24 +1,8 @@
 <section class="main_section">
     <div class="container">
         <div class="global_left_content">
+            <h2>Most liked</h2>
             <div class="like_content">
-                <h2>Most liked</h2>
-                <article class="like_card">
-                    <p class="like_message">Il était une fois ...</p>
-                    <p class="like_pseudo">@jean-mi-du-72</p>
-                    <div class="like_number">
-                        <img src="src/img/number.svg" alt="">
-                        <p class="number_total">70</p>
-                    </div>
-                </article>
-                <article class="like_card">
-                    <p class="like_message">Il était une fois ...</p>
-                    <p class="like_pseudo">@jean-mi-du-72</p>
-                    <div class="like_number">
-                        <img src="src/img/number.svg" alt="">
-                        <p class="number_total">70</p>
-                    </div>
-                </article>
             </div>
             <div class="author_content">
                 <h2>Best author</h2>
@@ -71,6 +55,7 @@
                     </div>
                 
             </div>
+        
         </div>
         <div class="global_right_content">
         <h2>Last touits</h2>

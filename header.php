@@ -17,7 +17,7 @@
                     <img src="src/img/duck.svg" alt="logo Duck">
                     <h1>Touiteur</h1>
                 </div>
-                <p>Il s'agit d'un monde peuplé de canard de merde.</p>
+                <p>Il s'agit d'un monde peuplé de petits canards trop tchoupi.</p>
             </div>
         </div>
 </header>

@@ -41,8 +41,11 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
 
         // 2. Insertion du comment / like / Close
 
+        // LIKE
+
         let newIconeBox = document.createElement("div");
         newIconeBox.className = "touit_icone_box";
+        
         let newLikeNumber = document.createElement("p");
         newLikeNumber.className = "likeNb";
         newLikeNumber.textContent = likes;
@@ -50,52 +53,76 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
         newLikeButton.className = "like";
         let newLikeButtonImg = document.createElement("img");
         newLikeButtonImg.src = "src/img/like.svg";
+
+        newIconeBox.appendChild(newLikeButton);
+        newIconeBox.appendChild(newLikeNumber);
+        newLikeButton.appendChild(newLikeButtonImg);
+
+        // Commentaire MODAL
+
+        // Bouton de base 
+
         let newCommentButton = document.createElement("button");
         newCommentButton.className = "comment";
-        // let newCommentContent = document.createElement("p");
-        // newCommentContent.className = "commentContent";
-        // newCommentContent.textContent  = comments;
         let newCommentButtonImg = document.createElement("img");
         newCommentButtonImg.src = "src/img/comment.svg";
+
+        newCommentButton.appendChild(newCommentButtonImg);
+
+        
+        /*
+
+        //Création de modal
+
+        let newModalComment = document.createElement("div");
+        newModalComment.className = "modalBox";
+        myTouit.appendChild(newModalComment);
+
+        // Content du modal
+
+        let newCommentContent = document.createElement("p");
+        newCommentContent.className = "commentContent";
+        newCommentContent.textContent  = comments;
+
+        newModalComment.appendChild(newCommentContent);
+
+        */
+
+        newIconeBox.appendChild(newCommentButton);
+
+        // BOUTON CLOSE
+
+
         let newCloseButton = document.createElement("button");
         newCloseButton.className = "close";
         let newCloseButtonImg = document.createElement("img");
         newCloseButtonImg.src = "src/img/close.svg";
-        let newDate = document.createElement("p");
-        newDate.className = "dateContent";
-        newDate.textContent  = formatTimestamp(timestamp);
-        newIconeBox.appendChild(newLikeButton);
-        newIconeBox.appendChild(newLikeNumber);
-        newLikeButton.appendChild(newLikeButtonImg);
-        newIconeBox.appendChild(newCommentButton);
-        //newIconeBox.appendChild(newCommentContent);
-        newIconeBox.appendChild(newDate);
-        newCommentButton.appendChild(newCommentButtonImg);
+
+        
         newIconeBox.appendChild(newCloseButton);
         newCloseButton.appendChild(newCloseButtonImg);
 
+        //newIconeBox.appendChild(newCommentContent);
+
+
         myTouit.appendChild(newIconeBox);
+
+        // Insertion de la date 
+
+        let newDateBox = document.createElement("div");
+        newDateBox.className = "touit_date_box";
+
+        let newDate = document.createElement("p");
+        newDate.className = "dateContent";
+        newDate.textContent  = formatTimestamp(timestamp);
+        newDateBox.appendChild(newDate);
+
+        myTouit.appendChild(newDateBox);
 
         // Insertion Finale
 
         messageContainer.prepend(myTouit);
 
-        // // Delete 
-
-        // newCloseButton.addEventListener("click", function(){
-        //     messageContainer.removeChild(myTouit);
-        // })
-
-        // Like
-
-        // newLikeButton.addEventListener("click", function(){
-        //     addLike(
-        //         function(resp){oneTouit(){
-        //         }},
-        //         function(){console.log("et non")},
-        //         myTouit.id
-        //     )
-        // })
 
         newLikeButton.addEventListener("click", function(){
             newLikeButton.classList.toggle("active");
@@ -108,11 +135,11 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
                             },
                             function() {console.log("Erreur REFRESH ADD");},
                             myTouit.id);
+                            newLikeButtonImg.src = "src/img/likefull.svg";
                         },
                     function() {console.log("Erreur ADD");},
                     myTouit.id
                 );
-                newLikeButton.style.background = "red";
             }
             else{
                 deleteLike(
@@ -123,21 +150,13 @@ function addTouit(pseudo, message, likes, comments, timestamp, id) {
                             },
                             function() {console.log("Erreur REFRESH DELETE");},
                             myTouit.id);
+                            newLikeButtonImg.src = "src/img/like.svg";
                     },
                     function() {console.log("Erreur DELETE");},
                     myTouit.id
                 );
-                newLikeButton.style.background ="none";
             }
         });
-        // myTouit.addEventListener("mouseenter", function(){
-        //     oneTouit(
-        //         function(resp) {
-        //             newLikeNumber.textContent = resp.data.likes;
-        //         },
-        //         function() {console.log("Erreur");},
-        //         myTouit.id);
-        // });
 
     }
 }
@@ -221,11 +240,11 @@ setInterval(function(){
         timestamp,
         function (resp){
             for (let i=0; i < resp.messages.length; i++){
-                addTouit(resp.messages[i].name, resp.messages[i].message, resp.messages[i].likes, resp.messages[i].comments_count, resp.messages[i].ts, resp.messages[i].id);
+                addTouit(resp.messages[i].name, resp.messages[i].message, resp.messages[i].likes, resp.messages[i].comments_count, resp.messages[i].ts, resp.messages[i].id); 
                 timestamp = resp.ts;
             }
         },
-        function(){console.log("Coucou1");},
+        function(){console.log("Coucou1");}
 )}, 1000);
 
 
@@ -273,8 +292,163 @@ function deleteLike(success, error, id) {
     requestDelete.send(data);
 }
 
-// MOST LIKE
-dqd
+// TOUIT LES PLUS LIKER
+
+const likeContainer = document.querySelector(".like_content");
+
+function mostLiked(pseudo, message, likes, id) {
+    if (pseudo,message) {
+
+        let myLikeTouit = document.createElement("article");
+        myLikeTouit.className = "like_card";
+        myLikeTouit.id = id;
+
+        let likeMessage = document.createElement("p");
+        likeMessage.className = "like_message";
+        let likeMessageContent =  document.createTextNode(message);
+        likeMessage.appendChild(likeMessageContent);
+        myLikeTouit.appendChild(likeMessage);
+
+        let likePseudo = document.createElement("p");
+        likePseudo.className = "like_pseudo";
+        let newLikePseudoContent =  document.createTextNode(pseudo);
+        likePseudo.appendChild(newLikePseudoContent);
+        myLikeTouit.appendChild(likePseudo);
+
+        // LIKE
+
+        let newLikeBox = document.createElement("div");
+        newLikeBox.className = "like_number";
+        
+        let newMostLikeButtonImg = document.createElement("img");
+        newMostLikeButtonImg.src = "src/img/number.svg";
+        let newMostLikeNumber = document.createElement("p");
+        newMostLikeNumber.className = "number_total";
+        newMostLikeNumber.textContent = likes;
+
+        myLikeTouit.appendChild(newLikeBox);
+        newLikeBox.appendChild(newMostLikeButtonImg);
+        newLikeBox.appendChild(newMostLikeNumber);
+
+        // Insertion Finale
+
+        likeContainer.appendChild(myLikeTouit);
+    }
+}
+
+function addMostLiked(success, error, nbTouit) {
+    const requestMostLiked = new XMLHttpRequest();
+    requestMostLiked.open("GET", "http://touiteur.cefim-formation.org/likes/top?count=" + nbTouit, true);
+    requestMostLiked.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    requestMostLiked.addEventListener("readystatechange", function () {
+        if (requestMostLiked.readyState === XMLHttpRequest.DONE) {
+            // On a reçu toute la réponse
+            if (requestMostLiked.status === 200) {
+                // La requête a fonctionnée
+                const reponseMostLiked = JSON.parse(requestMostLiked.responseText);
+                success(reponseMostLiked);
+            } else {
+                error(status);
+            }
+
+        }
+    });
+    requestMostLiked.send();
+}
+
+addMostLiked(
+    function (resp){
+        const coucouEtCoucou = resp.top.sort(function(a,b){return b.likes - a.likes});
+        for (let i=0; i < coucouEtCoucou.length; i++){
+            mostLiked(coucouEtCoucou[i].name, coucouEtCoucou[i].message, coucouEtCoucou[i].likes, coucouEtCoucou[i].id);
+        }
+    },
+    function(){console.log("Coucou6");
+    },
+3);
+
+// Best words
+
+// TOUIT LES PLUS LIKER
+
+const wordsContainer = document.querySelector("words_box");
+
+function bestWords(message,id) {
+    if (message) {
+
+        let myWords = document.createElement("article");
+        myWords.className = "words_card";
+        myWords.id = id;
+
+        let wordsDisplay = document.createElement("p");
+        wordsDisplay.className = "words_display";
+        let wordsDisplayContent =  document.createTextNode(message);
+
+        myWords.appendChild(wordsDisplay);
+        wordsDisplay.appendChild(wordsDisplayContent);
+
+        // Insertion Finale
+
+        wordsContainer.prepend(myWords);
+    }
+}
+
+function addBestWords(success, error) {
+    const requestBestWords = new XMLHttpRequest();
+    requestBestWords.open("GET", "http://touiteur.cefim-formation.org/trending", true);
+    requestBestWords.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    requestBestWords.addEventListener("readystatechange", function () {
+        if (requestBestWords.readyState === XMLHttpRequest.DONE) {
+            // On a reçu toute la réponse
+            if (requestBestWords.status === 200) {
+                // La requête a fonctionnée
+                const reponseBestWords = JSON.parse(requestBestWords.responseText);
+                success(reponseBestWords);
+            } else {
+                error(status);
+            }
+
+        }
+    });
+    requestBestWords.send();
+}
+
+
+
+
+addBestWords(
+    function (resp){
+        for (let i=0; i < resp.messages.length; i++){
+            bestWords(resp.messages[i].message, resp.messages[i].id);
+        }
+    },
+    function(){console.log("Coucou1");
+    },
+
+3);
+
+
+// setInterval(function(){
+//     addBestWords(
+//         function (resp){
+//             (function(a,b){return b.likes - a.likes})
+//             const trendingWords = Object.entries(resp).sort(function(a, b){return b[1] - a[1];});
+//             console.log(trendingWords);
+//             bestWords(trendingWords
+//                 .map(function(w) { return w[0]; })
+//                 .slice(0, 72)
+//             );
+//         },
+//         function(req){
+//             alert(
+//                 "Une erreur s'est produite lors de la réception du trending :\n" +
+//                 "" + req.status + " : " + req.statusText + " !\n" +
+//                 "Veuillez contacter l'administrateur du site si cela se reproduit !"
+//             );
+//         }
+//     )
+// }, 5000);
+
 
 
 // TEST AVEC JOKE
